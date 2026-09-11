@@ -48,8 +48,8 @@ table.dtbl tr:hover td { background:#F5F8FC; }
 
   <div class="tabs">
     <button class="tab-btn active" data-tab="context">Project Context</button>
+    <button class="tab-btn" data-tab="completeness">Completeness</button>
     <button class="tab-btn" data-tab="monthly">District HF Overview</button>
-    <button class="tab-btn" data-tab="completeness">HF Completeness</button>
     <button class="tab-btn" data-tab="facility">HF Detail</button>
     <button class="tab-btn" data-tab="act">HF ACT Consumption</button>
     <button class="tab-btn" data-tab="quali">HF Qualitative Findings</button>
@@ -74,10 +74,23 @@ table.dtbl tr:hover td { background:#F5F8FC; }
   <text x="8" y="150" font-size="9" fill="var(--muted)" font-weight="600">NIGERIA</text>
   <text x="196" y="150" font-size="8.5" fill="var(--muted)" font-weight="600">C.A.R.</text>
   <text x="70" y="292" font-size="8.5" fill="var(--muted)" font-weight="600">GABON / CONGO</text>
+  <g id="regionMarkers" fill="var(--navy)" opacity="0.55">
+    <circle cx="175.5" cy="73.1" r="2"/><text x="178" y="71" font-size="7" font-weight="600">Far North</text>
+    <circle cx="150.9" cy="104.0" r="2"/><text x="153" y="102" font-size="7" font-weight="600">North</text>
+    <circle cx="63.7" cy="183.4" r="2"/><text x="41" y="180" font-size="7" font-weight="600">Northwest</text>
+    <circle cx="155.3" cy="150.6" r="2"/><text x="158" y="148" font-size="7" font-weight="600">Adamawa</text>
+    <circle cx="70.8" cy="195.2" r="2"/><text x="45" y="205" font-size="7" font-weight="600">West</text>
+    <circle cx="39.0" cy="226.1" r="2"/><text x="6" y="224" font-size="7" font-weight="600">Southwest</text>
+    <circle cx="53.4" cy="228.9" r="2"/><text x="14" y="243" font-size="7" font-weight="600">Littoral</text>
+    <circle cx="158.5" cy="216.2" r="2.6" fill="var(--orange)" opacity="1"/><text x="161" y="214" font-size="7.5" font-weight="700" fill="var(--orange)" opacity="1">East</text>
+    <circle cx="100.3" cy="233.3" r="2"/><text x="103" y="231" font-size="7" font-weight="600">Centre</text>
+    <circle cx="90.5" cy="255.9" r="2"/><text x="93" y="254" font-size="7" font-weight="600">South</text>
+  </g>
   <line x1="184.8" y1="184.5" x2="184.8" y2="165" stroke="var(--orange)" stroke-width="1.4"/>
   <circle cx="184.8" cy="184.5" r="5.5" fill="var(--orange)" stroke="#fff" stroke-width="1.5"/>
   <text x="184.8" y="160" font-size="10.5" font-weight="700" fill="var(--navy)" text-anchor="middle">Garoua-Boulaï</text>
 </svg>
+          <p class="legend-note" style="text-align:center; margin-top:4px;">Cameroon's 10 regions (approximate labels; district lines not drawn) &mdash; the pilot sits in the East Region.</p>
         </div>
         <div>
           <p style="font-size:13px; line-height:1.6; color:var(--text); margin:0 0 10px;">The pilot runs in <strong>Garoua-Boula&iuml;</strong>, a health district in the Lom-et-Dj&eacute;rem department, East Region of Cameroon, on the border with the Central African Republic.</p>
@@ -89,6 +102,11 @@ table.dtbl tr:hover td { background:#F5F8FC; }
             <div class="stat"><div class="num">33</div><div class="lbl">CHWs onboarded (9 of 16 facility catchments, as of May)</div></div>
             <div class="stat"><div class="num">Monthly</div><div class="lbl">Validation meeting cadence</div></div>
           </div>
+          <div class="stat-row">
+            <div class="stat"><div class="num">16 / ~2,260</div><div class="lbl">Pilot HFs vs. public health facilities nationwide</div></div>
+            <div class="stat"><div class="num">1 / 181</div><div class="lbl">Pilot health district vs. health districts nationwide</div></div>
+          </div>
+          <p class="legend-note" style="margin-top:8px;">Cameroon's public health system spans 10 regions, 181 health districts and roughly 2,260 public health facilities (Cameroon Health Sector Strategy 2016&ndash;2027). This pilot covers 16 facilities in one health district &mdash; a small, geographically concentrated test of the verification approach before any wider scale-up.</p>
         </div>
       </div>
     </div>
@@ -138,10 +156,6 @@ table.dtbl tr:hover td { background:#F5F8FC; }
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h2 style="margin:0;" id="districtChartTitle">TPR by source, March to July 2026 (district)</h2>
-        <div class="month-select" id="metricToggle">
-          <button class="month-btn active" data-metric="tpr">TPR (%)</button>
-          <button class="month-btn" data-metric="volumes">Volumes</button>
-        </div>
       </div>
       <div style="margin:10px 0 4px;">
         <select id="indicatorSelect" style="padding:6px 10px; border-radius:6px; border:1px solid var(--border); font-size:13px; color:var(--text); background:#fff;">
@@ -151,7 +165,8 @@ table.dtbl tr:hover td { background:#F5F8FC; }
         <p class="legend-note" id="indicatorDefinition" style="margin-top:6px;"></p>
       </div>
       <div class="chart-box" id="boxTPR"><canvas id="chartTPR"></canvas></div>
-      <div class="grid-2" id="boxVolumes" style="display:none; margin-top:10px;">
+      <p style="font-size:12px; font-weight:600; color:var(--muted); margin:14px 0 6px;">Volumes by source</p>
+      <div class="grid-2" id="boxVolumes" style="margin-top:0;">
         <div>
           <p style="font-size:12px; font-weight:600; color:var(--muted); margin:0 0 6px;">Tests performed</p>
           <div class="chart-box" style="height:260px;"><canvas id="chartVolTests"></canvas></div>
@@ -166,13 +181,10 @@ table.dtbl tr:hover td { background:#F5F8FC; }
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h2 style="margin:0;" id="concordanceChartTitle">TPR Concordance — digital reader vs manual count (%)</h2>
-        <div class="month-select" id="concordanceToggle">
-          <button class="month-btn active" data-metric="pct">TPR Concordance (%)</button>
-          <button class="month-btn" data-metric="volumes">Volumes</button>
-        </div>
       </div>
       <div class="chart-box" id="boxConcordancePct"><canvas id="chartConcordance"></canvas></div>
-      <div class="grid-2" id="boxConcordanceVol" style="display:none; margin-top:10px;">
+      <p style="font-size:12px; font-weight:600; color:var(--muted); margin:14px 0 6px;">Volume concordance</p>
+      <div class="grid-2" id="boxConcordanceVol" style="margin-top:0;">
         <div>
           <p style="font-size:12px; font-weight:600; color:var(--muted); margin:0 0 6px;">Test volume concordance (%)</p>
           <div class="chart-box" style="height:260px;"><canvas id="chartConcVolTests"></canvas></div>
@@ -187,9 +199,9 @@ table.dtbl tr:hover td { background:#F5F8FC; }
   </div>
 
   <div class="tab-panel" id="tab-completeness">
-    <div class="page-intro"><strong>This tab:</strong> how completely each facility reported across all four data sources (manual, digital reader, RMA, DHIS2) each month, to flag facilities or months with missing data.</div>
+    <div class="page-intro"><strong>This tab:</strong> how completely each facility (top) and each CHW catchment (bottom) reported across data sources each month, to flag facilities, CHWs or months with missing data.</div>
     <div class="card">
-      <h2>Data Completeness by Facility and Month</h2>
+      <h2>HF Data Completeness by Facility and Month</h2>
       <p class="legend-note">Number of sources (out of 4: Manual, Lab Registers, RMA, DHIS2) with reported data, per facility per month. Hover a cell for details.</p>
       <div style="display:flex; gap:14px; align-items:center; margin:8px 0 14px; flex-wrap:wrap;">
         <span style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted);"><span style="width:12px; height:12px; border-radius:3px; background:#12805C; display:inline-block;"></span>4/4</span>
@@ -201,6 +213,19 @@ table.dtbl tr:hover td { background:#F5F8FC; }
       <div id="completenessGrid" style="overflow-x:auto;"></div>
       <p class="legend-note" id="completenessSummary" style="margin-top:14px;"></p>
     </div>
+    <div class="card">
+      <h2>CHW Reporting Completeness by Facility Catchment and Month</h2>
+      <p class="legend-note">CHWs are numbered inconsistently month to month in the source files, so completeness is tracked per facility catchment rather than per individual CHW. Each cell shows the share of that facility's onboarded CHWs who reported <em>any</em> data that month, and (in the tooltip) how many of the 3 sources (Manual, Digital Reader, RMA) had at least one CHW report. CHWs joined the pilot from April 2026 (none in March).</p>
+      <div style="display:flex; gap:14px; align-items:center; margin:8px 0 14px; flex-wrap:wrap;">
+        <span style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted);"><span style="width:12px; height:12px; border-radius:3px; background:#12805C; display:inline-block;"></span>&ge;90% reporting</span>
+        <span style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted);"><span style="width:12px; height:12px; border-radius:3px; background:#DCEEE3; display:inline-block;"></span>60&ndash;89%</span>
+        <span style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted);"><span style="width:12px; height:12px; border-radius:3px; background:#FCF3CF; display:inline-block;"></span>30&ndash;59%</span>
+        <span style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted);"><span style="width:12px; height:12px; border-radius:3px; background:#FDEBD0; display:inline-block;"></span>1&ndash;29%</span>
+        <span style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted);"><span style="width:12px; height:12px; border-radius:3px; background:#FBE9E7; display:inline-block;"></span>0% / no CHWs</span>
+      </div>
+      <div id="chwCompletenessGrid" style="overflow-x:auto;"></div>
+      <p class="legend-note" id="chwCompletenessSummary" style="margin-top:14px;"></p>
+    </div>
   </div>
 
   <div class="tab-panel" id="tab-facility">
@@ -208,10 +233,6 @@ table.dtbl tr:hover td { background:#F5F8FC; }
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h2 style="margin:0;" id="facilityTrendTitle">TPR by Facility, March to July 2026</h2>
-        <div class="month-select" id="facilityMetricToggle">
-          <button class="month-btn active" data-metric="tpr">TPR (%)</button>
-          <button class="month-btn" data-metric="volumes">Volumes</button>
-        </div>
       </div>
       <div style="margin:10px 0 4px; display:flex; gap:10px; flex-wrap:wrap;">
         <select id="facilityTrendSelect" style="padding:6px 10px; border-radius:6px; border:1px solid var(--border); font-size:13px; color:var(--text); background:#fff;"></select>
@@ -222,7 +243,8 @@ table.dtbl tr:hover td { background:#F5F8FC; }
       </div>
       <p class="legend-note" id="facilityIndicatorDefinition" style="margin-top:2px;"></p>
       <div class="chart-box" id="facilityBoxTPR"><canvas id="chartFacilityTrend"></canvas></div>
-      <div class="grid-2" id="facilityBoxVolumes" style="display:none; margin-top:10px;">
+      <p style="font-size:12px; font-weight:600; color:var(--muted); margin:14px 0 6px;">Volumes by source</p>
+      <div class="grid-2" id="facilityBoxVolumes" style="margin-top:0;">
         <div>
           <p style="font-size:12px; font-weight:600; color:var(--muted); margin:0 0 6px;">Tests performed</p>
           <div class="chart-box" style="height:260px;"><canvas id="chartFacilityVolTests"></canvas></div>
@@ -233,6 +255,7 @@ table.dtbl tr:hover td { background:#F5F8FC; }
         </div>
       </div>
       <p class="legend-note">TPR/volumes by source, March to July, for the selected facility. Some facilities are missing a source in some months (device not used, indicator not reported, or facility not surveyed that month).</p>
+      <div id="facilityQualiNotes" style="margin-top:14px;"></div>
     </div>
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -274,7 +297,7 @@ table.dtbl tr:hover td { background:#F5F8FC; }
         <thead></thead>
         <tbody></tbody>
       </table>
-      <p class="legend-note" id="facilityTableNote">Click a column header to sort. Gap in percentage points (pp); shown in red if &ge; 10pp.</p>
+      <p class="legend-note" id="facilityTableNote">Click a column header to sort. Gap in percentage points (pp); shown in red if &ge; 10pp. First row: district-level TPR average from RMA and DHIS2 (Ind.21/22) only &mdash; Manual and Lab Registers are not aggregated at district level, hence NA.</p>
     </div>
   </div>
 
@@ -367,13 +390,10 @@ table.dtbl tr:hover td { background:#F5F8FC; }
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h2 style="margin:0;" id="chwDistrictChartTitle">CHW TPR by source, April to July 2026 (district)</h2>
-        <div class="month-select" id="chwMetricToggle">
-          <button class="month-btn active" data-metric="tpr">TPR (%)</button>
-          <button class="month-btn" data-metric="volumes">Volumes</button>
-        </div>
       </div>
       <div class="chart-box" id="chwBoxTPR"><canvas id="chwChartTPR"></canvas></div>
-      <div class="grid-2" id="chwBoxVolumes" style="display:none; margin-top:10px;">
+      <p style="font-size:12px; font-weight:600; color:var(--muted); margin:14px 0 6px;">Volumes by source</p>
+      <div class="grid-2" id="chwBoxVolumes" style="margin-top:0;">
         <div>
           <p style="font-size:12px; font-weight:600; color:var(--muted); margin:0 0 6px;">Tests performed</p>
           <div class="chart-box" style="height:260px;"><canvas id="chwChartVolTests"></canvas></div>
@@ -417,7 +437,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
-    if (btn.dataset.tab === 'facility') initFacilityTrendChart();
+    if (btn.dataset.tab === 'facility') { initFacilityTrendChart(); initFacilityVolumeCharts(); }
   });
 });
 
@@ -458,6 +478,13 @@ function refreshIndicatorDefinition() {
   document.getElementById('indicatorDefinition').textContent = pairDefinition[currentPair];
 }
 
+// Count how many of the 16 facilities have a non-null value for a given source/month, for tooltip disclosure
+function districtFacilityCount(monthLabel, field) {
+  const rowsAll = FACILITY[monthLabel];
+  if (!rowsAll) return null;
+  return rowsAll.filter(r => r.name !== 'TOTAL' && r[field] != null).length;
+}
+const districtSourceField = ['tpr_manual', 'tpr_reg', 'tpr_rma', 'tpr_dhis2'];
 const tprChart = new Chart(document.getElementById('chartTPR'), {
   type: 'line',
   data: {
@@ -471,20 +498,47 @@ const tprChart = new Chart(document.getElementById('chartTPR'), {
   },
   options: { responsive:true, maintainAspectRatio:false,
     scales: { y: { title:{display:true,text:'TPR (%)'}, min:0, max:100 } },
-    plugins: { legend:{position:'bottom'} }
+    plugins: { legend:{position:'bottom'},
+      tooltip: { callbacks: {
+        afterLabel: function(ctx) {
+          const month = ctx.label;
+          const field = districtSourceField[ctx.datasetIndex];
+          const n = districtFacilityCount(month, field);
+          return n != null ? 'Reported by ' + n + ' of 16 facilities' : '';
+        }
+      } }
+    }
   }
 });
 
-// Toggle TPR vs Volumes
+// Volumes are always shown below TPR (no toggle)
 let volTestsChart = null, volPosChart = null;
-const metricNote = {
-  tpr: "The DHIS2 vs manual gap narrows markedly over the months.",
-  volumes: "Even as TPR converges, raw volumes often remain very different between sources."
-};
 function refreshDistrictNote() {
-  const metric = document.querySelector('#metricToggle .month-btn.active').dataset.metric;
   const pairText = currentPair === '21' ? "Ind.21/22 (RDTs performed / Pf positives)" : "Ind.3/5+7 (suspects tested / simple+severe confirmed), not available for March";
-  document.getElementById('districtChartNote').textContent = metricNote[metric] + " DHIS2 indicator pair shown: " + pairText + ".";
+  document.getElementById('districtChartNote').textContent = "The DHIS2 vs manual gap narrows markedly over the months. DHIS2 indicator pair shown: " + pairText + ". Not every facility reports every source each month \u2014 hover a point to see how many of the 16 facilities are behind it.";
+}
+function buildDistrictVolCharts() {
+  if (volTestsChart) return;
+  volTestsChart = new Chart(document.getElementById('chartVolTests'), {
+    type: 'bar',
+    data: { labels: DISTRICT.labels, datasets: [
+      { label:'Manual', data: DISTRICT.tests_manual, backgroundColor:'#003E78' },
+      { label:'Lab Registers', data: DISTRICT.tests_register, backgroundColor:'#4C9F70' },
+      { label: rmaPairLabel[currentPair], data: rmaSeries('tests'), backgroundColor:'#7A5CC7' },
+      { label: pairLabel[currentPair], data: dhis2Series('tests'), backgroundColor:'#E07B00' },
+    ]},
+    options: { responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, min:0, max:5000, title:{display:true,text:'Tests'} } }, plugins:{ legend:{position:'bottom'} } }
+  });
+  volPosChart = new Chart(document.getElementById('chartVolPos'), {
+    type: 'bar',
+    data: { labels: DISTRICT.labels, datasets: [
+      { label:'Manual', data: DISTRICT.pos_manual, backgroundColor:'#003E78' },
+      { label:'Lab Registers', data: DISTRICT.pos_register, backgroundColor:'#4C9F70' },
+      { label: rmaPairLabel[currentPair], data: rmaSeries('pos'), backgroundColor:'#7A5CC7' },
+      { label: pairLabel[currentPair], data: dhis2Series('pos'), backgroundColor:'#E07B00' },
+    ]},
+    options: { responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, min:0, max:5000, title:{display:true,text:'Positives'} } }, plugins:{ legend:{position:'bottom'} } }
+  });
 }
 function updateDhis2Datasets() {
   tprChart.data.datasets[2].label = rmaPairLabel[currentPair];
@@ -514,45 +568,7 @@ document.getElementById('indicatorSelect').addEventListener('change', (e) => {
   refreshIndicatorDefinition();
 });
 refreshIndicatorDefinition();
-document.querySelectorAll('#metricToggle .month-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#metricToggle .month-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const metric = btn.dataset.metric;
-    refreshDistrictNote();
-    if (metric === 'tpr') {
-      document.getElementById('boxTPR').style.display = '';
-      document.getElementById('boxVolumes').style.display = 'none';
-      document.getElementById('districtChartTitle').textContent = 'TPR by source, March to July 2026 (district)';
-    } else {
-      document.getElementById('boxTPR').style.display = 'none';
-      document.getElementById('boxVolumes').style.display = '';
-      document.getElementById('districtChartTitle').textContent = 'Volumes by source, March to July 2026 (district)';
-      if (!volTestsChart) {
-        volTestsChart = new Chart(document.getElementById('chartVolTests'), {
-          type: 'bar',
-          data: { labels: DISTRICT.labels, datasets: [
-            { label:'Manual', data: DISTRICT.tests_manual, backgroundColor:'#003E78' },
-            { label:'Lab Registers', data: DISTRICT.tests_register, backgroundColor:'#4C9F70' },
-            { label: rmaPairLabel[currentPair], data: rmaSeries('tests'), backgroundColor:'#7A5CC7' },
-            { label: pairLabel[currentPair], data: dhis2Series('tests'), backgroundColor:'#E07B00' },
-          ]},
-          options: { responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, min:0, max:5000, title:{display:true,text:'Tests'} } }, plugins:{ legend:{position:'bottom'} } }
-        });
-        volPosChart = new Chart(document.getElementById('chartVolPos'), {
-          type: 'bar',
-          data: { labels: DISTRICT.labels, datasets: [
-            { label:'Manual', data: DISTRICT.pos_manual, backgroundColor:'#003E78' },
-            { label:'Lab Registers', data: DISTRICT.pos_register, backgroundColor:'#4C9F70' },
-            { label: rmaPairLabel[currentPair], data: rmaSeries('pos'), backgroundColor:'#7A5CC7' },
-            { label: pairLabel[currentPair], data: dhis2Series('pos'), backgroundColor:'#E07B00' },
-          ]},
-          options: { responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, min:0, max:5000, title:{display:true,text:'Positives'} } }, plugins:{ legend:{position:'bottom'} } }
-        });
-      }
-    }
-  });
-});
+buildDistrictVolCharts();
 refreshDistrictNote();
 
 // Chart 2: concordance
@@ -580,66 +596,43 @@ new Chart(document.getElementById('chartConcordance'), {
   }
 });
 
-// Toggle Concordance % vs Volumes
-let concVolTestsChart = null, concVolPosChart = null;
-const concordanceNote = {
-  pct: "Target: 90-110%. Below target in March, within target afterward. The digital reader was used again in July but the official concordance has not yet been published for that month; no reader data available in June.",
-  volumes: "Volume concordance = digital reader volume divided by manual count volume (%). Computed the same way for tests performed and for positives. No reader data available in June (device not used/not reported that month). Hover a bar for the underlying Manual and Reader counts."
-};
-document.querySelectorAll('#concordanceToggle .month-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#concordanceToggle .month-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const metric = btn.dataset.metric;
-    document.getElementById('concordanceChartNote').textContent = concordanceNote[metric];
-    if (metric === 'pct') {
-      document.getElementById('boxConcordancePct').style.display = '';
-      document.getElementById('boxConcordanceVol').style.display = 'none';
-      document.getElementById('concordanceChartTitle').textContent = 'TPR Concordance — digital reader vs manual count (%)';
-    } else {
-      document.getElementById('boxConcordancePct').style.display = 'none';
-      document.getElementById('boxConcordanceVol').style.display = '';
-      document.getElementById('concordanceChartTitle').textContent = 'Volume Concordance — digital reader vs manual count (%)';
-      if (!concVolTestsChart) {
-        concVolTestsChart = new Chart(document.getElementById('chartConcVolTests'), {
-          type: 'bar',
-          data: { labels: DISTRICT.labels, datasets: [
-            { label:'Test volume concordance (%)', data: testVolConcordance,
-              backgroundColor: testVolConcordance.map(v => v!=null && v>=90 && v<=110 ? '#4C9F70' : '#E07B00') },
-          ]},
-          plugins: [targetBandPlugin],
-          options: { responsive:true, maintainAspectRatio:false,
-            scales:{ y:{ min:0, max:120, title:{display:true,text:'%'} } },
-            plugins:{ legend:{display:false},
-              tooltip: { callbacks: {
-                label: (ctx) => 'Concordance: ' + (ctx.parsed.y != null ? ctx.parsed.y + '%' : 'n/a'),
-                afterLabel: (ctx) => { const i = ctx.dataIndex; return 'Manual tests: ' + (DISTRICT.tests_manual[i] != null ? DISTRICT.tests_manual[i] : 'n/a') + ' | Reader tests: ' + (DISTRICT.tests_reader[i] != null ? DISTRICT.tests_reader[i] : 'n/a'); }
-              } }
-            },
-            targetBand: { min:90, max:110, color:'rgba(76,159,112,0.15)' }
-          }
-        });
-        concVolPosChart = new Chart(document.getElementById('chartConcVolPos'), {
-          type: 'bar',
-          data: { labels: DISTRICT.labels, datasets: [
-            { label:'Positive volume concordance (%)', data: posVolConcordance,
-              backgroundColor: posVolConcordance.map(v => v!=null && v>=90 && v<=110 ? '#4C9F70' : '#E07B00') },
-          ]},
-          plugins: [targetBandPlugin],
-          options: { responsive:true, maintainAspectRatio:false,
-            scales:{ y:{ min:0, max:120, title:{display:true,text:'%'} } },
-            plugins:{ legend:{display:false},
-              tooltip: { callbacks: {
-                label: (ctx) => 'Concordance: ' + (ctx.parsed.y != null ? ctx.parsed.y + '%' : 'n/a'),
-                afterLabel: (ctx) => { const i = ctx.dataIndex; return 'Manual positives: ' + (DISTRICT.pos_manual[i] != null ? DISTRICT.pos_manual[i] : 'n/a') + ' | Reader positives: ' + (DISTRICT.pos_reader[i] != null ? DISTRICT.pos_reader[i] : 'n/a'); }
-              } }
-            },
-            targetBand: { min:90, max:110, color:'rgba(76,159,112,0.15)' }
-          }
-        });
-      }
-    }
-  });
+// Volume concordance charts are always shown below the % concordance chart (no toggle)
+document.getElementById('concordanceChartNote').textContent = "Target: 90-110%. Below target in March, within target afterward. The digital reader was used again in July but the official concordance has not yet been published for that month; no reader data available in June. Volume concordance = digital reader volume divided by manual count volume (%), shown below for tests and positives separately.";
+const concVolTestsChart = new Chart(document.getElementById('chartConcVolTests'), {
+  type: 'bar',
+  data: { labels: DISTRICT.labels, datasets: [
+    { label:'Test volume concordance (%)', data: testVolConcordance,
+      backgroundColor: testVolConcordance.map(v => v!=null && v>=90 && v<=110 ? '#4C9F70' : '#E07B00') },
+  ]},
+  plugins: [targetBandPlugin],
+  options: { responsive:true, maintainAspectRatio:false,
+    scales:{ y:{ min:0, max:120, title:{display:true,text:'%'} } },
+    plugins:{ legend:{display:false},
+      tooltip: { callbacks: {
+        label: (ctx) => 'Concordance: ' + (ctx.parsed.y != null ? ctx.parsed.y + '%' : 'n/a'),
+        afterLabel: (ctx) => { const i = ctx.dataIndex; return 'Manual tests: ' + (DISTRICT.tests_manual[i] != null ? DISTRICT.tests_manual[i] : 'n/a') + ' | Reader tests: ' + (DISTRICT.tests_reader[i] != null ? DISTRICT.tests_reader[i] : 'n/a'); }
+      } }
+    },
+    targetBand: { min:90, max:110, color:'rgba(76,159,112,0.15)' }
+  }
+});
+const concVolPosChart = new Chart(document.getElementById('chartConcVolPos'), {
+  type: 'bar',
+  data: { labels: DISTRICT.labels, datasets: [
+    { label:'Positive volume concordance (%)', data: posVolConcordance,
+      backgroundColor: posVolConcordance.map(v => v!=null && v>=90 && v<=110 ? '#4C9F70' : '#E07B00') },
+  ]},
+  plugins: [targetBandPlugin],
+  options: { responsive:true, maintainAspectRatio:false,
+    scales:{ y:{ min:0, max:120, title:{display:true,text:'%'} } },
+    plugins:{ legend:{display:false},
+      tooltip: { callbacks: {
+        label: (ctx) => 'Concordance: ' + (ctx.parsed.y != null ? ctx.parsed.y + '%' : 'n/a'),
+        afterLabel: (ctx) => { const i = ctx.dataIndex; return 'Manual positives: ' + (DISTRICT.pos_manual[i] != null ? DISTRICT.pos_manual[i] : 'n/a') + ' | Reader positives: ' + (DISTRICT.pos_reader[i] != null ? DISTRICT.pos_reader[i] : 'n/a'); }
+      } }
+    },
+    targetBand: { min:90, max:110, color:'rgba(76,159,112,0.15)' }
+  }
 });
 
 // Facility TPR trend chart (by facility, across months, with indicator-pair + TPR/Volumes toggle)
@@ -708,6 +701,68 @@ function renderCompletenessGrid() {
 }
 renderCompletenessGrid();
 
+// CHW completeness heatmap: facility catchment x month (CHW_DETAIL is defined further below,
+// but this function is only invoked after full script evaluation via chwRenderAllCompleteness()).
+function chwFacilityMonthStats(hf, month) {
+  const arr = (typeof CHW_DETAIL !== 'undefined' && CHW_DETAIL[month]) ? (CHW_DETAIL[month][hf] || []) : [];
+  const onboarded = arr.length;
+  let reporting = 0, anyManual = false, anyReader = false, anyRma = false;
+  arr.forEach(c => {
+    const hasManual = c.manual_tests != null;
+    const hasReader = c.reader_tests != null;
+    const hasRma = c.rma_tests != null;
+    if (hasManual) anyManual = true;
+    if (hasReader) anyReader = true;
+    if (hasRma) anyRma = true;
+    if (hasManual || hasReader || hasRma) reporting++;
+  });
+  const sourceCount = [anyManual, anyReader, anyRma].filter(Boolean).length;
+  const pct = onboarded > 0 ? Math.round(reporting / onboarded * 100) : null;
+  return { onboarded, reporting, pct, sourceCount, anyManual, anyReader, anyRma };
+}
+function chwCompletenessColor(pct) {
+  if (pct == null) return { bg:'#FBE9E7', fg:'#B42318' };
+  if (pct >= 90) return { bg:'#12805C', fg:'#fff' };
+  if (pct >= 60) return { bg:'#DCEEE3', fg:'#12805C' };
+  if (pct >= 30) return { bg:'#FCF3CF', fg:'#7D6608' };
+  if (pct > 0) return { bg:'#FDEBD0', fg:'#9A5B00' };
+  return { bg:'#FBE9E7', fg:'#B42318' };
+}
+function chwRenderCompletenessGrid() {
+  const container = document.getElementById('chwCompletenessGrid');
+  if (!container) return;
+  const months = Object.keys(CHW_DETAIL);
+  const facilitiesSet = new Set();
+  months.forEach(m => Object.keys(CHW_DETAIL[m]).forEach(hf => facilitiesSet.add(hf)));
+  const facilities = Array.from(facilitiesSet).sort();
+  let html = '<div style="display:grid; grid-template-columns: 190px repeat(' + months.length + ', 1fr); gap:3px; min-width:480px;">';
+  html += '<div></div>';
+  months.forEach(m => html += '<div style="font-size:12px; color:var(--muted); text-align:center; padding:4px 0; font-weight:600;">' + m + '</div>');
+  facilities.forEach(hf => {
+    const label = hf === 'HP' ? 'Hôpital Protestant (HP)' : hf;
+    html += '<div style="font-size:12px; color:var(--text); display:flex; align-items:center; padding-right:8px;">' + label + '</div>';
+    months.forEach(m => {
+      const s = chwFacilityMonthStats(hf, m);
+      const c = chwCompletenessColor(s.pct);
+      const title = s.onboarded > 0
+        ? s.reporting + ' of ' + s.onboarded + ' onboarded CHWs reported | Sources with ≥1 CHW reporting: ' + s.sourceCount + '/3 (Manual: ' + (s.anyManual?'yes':'no') + ', Reader: ' + (s.anyReader?'yes':'no') + ', RMA: ' + (s.anyRma?'yes':'no') + ')'
+        : 'No CHWs recorded at this facility for ' + m;
+      const txt = s.onboarded > 0 ? s.pct + '%' : '–';
+      html += '<div title="' + title + '" style="background:' + c.bg + '; color:' + c.fg + '; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center; height:30px; border-radius:4px;">' + txt + '</div>';
+    });
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  let totalOnboarded = 0, totalReporting = 0;
+  facilities.forEach(hf => months.forEach(m => {
+    const s = chwFacilityMonthStats(hf, m);
+    totalOnboarded += s.onboarded; totalReporting += s.reporting;
+  }));
+  const overallPct = totalOnboarded > 0 ? Math.round(totalReporting / totalOnboarded * 100) : 0;
+  document.getElementById('chwCompletenessSummary').textContent =
+    'Across ' + facilities.length + ' CHW-affiliated facility catchments and ' + months.length + ' months (April\u2013July), ' + overallPct + '% of onboarded-CHW-months had any data reported. Completeness varies widely by facility catchment \u2014 hover a cell for the exact count and which sources were used.';
+}
 // Discordance heatmap (all facilities, March-July) - 3 comparison modes
 const DISCORDANCE_MODES = {
   reg: { ref: 'manual', cmp: 'reg', refLabel: 'Manual' },
@@ -974,11 +1029,100 @@ function updateFacilityVolumeCharts() {
   facilityVolPosChart.update();
 }
 
+// Qualitative annotations: real "Probable Cause" findings from the monthly Validation Meeting
+// Reports (CRID/CHAI), keyed by canonical facility name then month. Only months with a published
+// Validation Report and a notable discordance for that facility are included (April coverage is
+// partial \u2014 only the facilities flagged as top examples in that report are available).
+const QUALI_NOTES = {
+  "CSI Bindiba": {
+    "March": "RMA overcounting (64.5% TPR in RMA); possible inclusion of clinically diagnosed cases as confirmed positives in DHIS2. (TPR Manual 12.5% vs DHIS2 44.3%, +31.8pp)",
+    "May": "Moderate over-reporting of positives in DHIS2 relative to manual count. (TPR Manual 49.7% vs DHIS2 59.8%, +10.1pp)"
+  },
+  "CSI Gado-Badzère": {
+    "March": "Complete absence of DHIS2 submission; no data entered for March 2026.",
+    "April": "Probable under-reporting of positives in DHIS2; incomplete RMA entry. (TPR Manual 26.5% vs DHIS2 20.6%, -22.2pp)",
+    "May": "No DHIS2 data submitted for May. Facility not systematically reporting to DHIS2 this cycle."
+  },
+  "CSP Bessaye": {
+    "March": "Low reader coverage (31%); DHIS2 figures likely derived from RMA/register data without verification; confirmed case inflation. (TPR Manual 19.7% vs DHIS2 35.4%, +15.7pp)",
+    "May": "Within acceptable tolerance; strong agreement across all four data sources. (TPR Manual 36.1% vs DHIS2 35.0%, -1.2pp)"
+  },
+  "CSP An-Nour": {
+    "March": "Severe volume underreporting in DHIS2; no RMA data available; reader 0% positivity anomaly. (TPR Manual 13.4% vs DHIS2 17.7%, +4.3pp, volume -71.5%)",
+    "May": "DHIS2 positives over-reported relative to manual count; consistent with register/RMA inflation seen at this site historically. (TPR Manual 27.8% vs DHIS2 40.5%, +12.7pp)"
+  },
+  "CM Al-Shifaa": {
+    "March": "RMA double the manual count (170 vs 85 RDTs); possible inclusion of CHW data in HF RMA; reader 0% positivity anomaly. (TPR Manual 44.7% vs DHIS2 30.6%, -14.1pp, volume +100%)",
+    "April": "Lab register anomaly (140 positives recorded vs 64 manual count). Likely dual-recording of consultations in laboratory and outpatient registers. (TPR Manual 31.4% vs Register 46.0%)",
+    "May": "Minor over-reporting; within moderate-acceptable range; register and DHIS2 figures are fully consistent with one another. (TPR Manual 34.4% vs DHIS2 39.6%, +5.2pp)"
+  },
+  "CSI Nandoungue": {
+    "March": "Complete DHIS2 non-reporting; despite relatively good register concordance.",
+    "May": "Excellent agreement; this facility continues to demonstrate strong data-quality practice. (TPR Manual 31.6% vs DHIS2 31.8%, +0.1pp)"
+  },
+  "PSF": {
+    "March": "Manual count shows 0 positives yet register has 9 positives and DHIS2 has 32; severe data inconsistency across all sources. (TPR Manual 0.0% vs DHIS2 40.0%, +40.0pp)",
+    "May": "Large over-reporting of positives in DHIS2/register relative to manual count. (TPR Manual 21.3% vs DHIS2 53.9%, +32.6pp)"
+  },
+  "CS Catholique": {
+    "March": "No DHIS2 submission; largest HF by volume (336 manual RDTs); significant reporting gap.",
+    "May": "Critical internal DHIS2 inconsistency (Ind.5+7 = 58 vs Ind.22 = 11 for the same month); combined with a 1,668-dose ACT anomaly, requires an immediate full data audit. (TPR Manual 24.5% vs DHIS2 4.0%, -20.5pp)"
+  },
+  "CSP Les Dauphins": {
+    "March": "RMA TPR of 25% vs manual 12.5%; DHIS2 likely based on inflated RMA figures. (TPR Manual 12.5% vs DHIS2 34.1%, +21.6pp)",
+    "May": "Acceptable discordance, though Digital Reader data for this site is unusable this cycle (duplicated from CSP Docta Kee) and should not be cross-referenced against DHIS2. (TPR Manual 38.0% vs DHIS2 44.4%, +6.4pp)"
+  },
+  "Garnison 16e BIM": {
+    "March": "DHIS2 shows 3 RDTs, 0 positives vs manual 36 RDTs, 6 positives; near-complete reporting failure. (TPR Manual 16.7% vs DHIS2 0.0%, -16.7pp, volume -91.7%)",
+    "May": "No DHIS2 data submitted for May; also the site with the highest invalid-cassette rate in the dataset this cycle. (TPR Manual 63.8%)"
+  },
+  "CSP Nyiniki Hassim": {
+    "April": "Critical data entry error: 25 positives reported for only 11 DHIS2 RDTs \u2014 mathematically impossible, requires immediate correction. (TPR Manual 34.2% vs DHIS2 227.3%, +564.0pp)",
+    "May": "No DHIS2 data submitted for May despite RMA(1)/Ind.3 indicators being populated \u2014 suggests confusion between the two parallel RMA indicator pairs rather than total reporting failure."
+  },
+  "CS Islamique": {
+    "May": "Substantial over-reporting of positives in DHIS2/register relative to manual count; among the largest-volume sites, warrants priority review. (TPR Manual 29.6% vs DHIS2 54.5%, +24.8pp)"
+  },
+  "CMP Bon Berger": {
+    "May": "Perfect agreement at aggregate level; strong data-quality practice. (TPR Manual 22.2% vs DHIS2 22.2%, 0.0pp)"
+  },
+  "CSP Docta Kee": {
+    "May": "Minimal discordance; ACT/positive ratio (0.44) on the low side, worth a brief stock check. (TPR Manual 31.6% vs DHIS2 32.5%, +1.0pp)"
+  },
+  "Garnison IGM (43e Escadron)": {
+    "May": "DHIS2 reports 0 positives from 29 RDTs despite 16 manually confirmed positives \u2014 likely an incomplete DHIS2 entry rather than a true absence of cases. (TPR Manual 22.9% vs DHIS2 0.0%, -22.9pp)"
+  },
+  "CSP Docta Saye": {
+    "May": "Minimal discordance; ACT = 0 despite 73 confirmed positives requires stock-card verification. (TPR Manual 44.5% vs DHIS2 48.5%, +4.0pp)"
+  }
+};
+const QUALI_SOURCE_LABEL = { "March": "March 2026 Validation Report", "April": "April 2026 Validation Report (Final)", "May": "June 2026 Validation Meeting Report (May data)" };
+function renderFacilityQualiNotes() {
+  const box = document.getElementById('facilityQualiNotes');
+  if (!box) return;
+  const notes = QUALI_NOTES[currentTrendFacility];
+  if (!notes || Object.keys(notes).length === 0) {
+    box.innerHTML = '<p class="legend-note" style="font-style:italic;">No qualitative note recorded for this facility in the March\u2013May validation reports (June/July reports not yet published, or this facility had no notable discordance those months).</p>';
+    return;
+  }
+  const monthOrder = ['March','April','May','June','July'];
+  const months = Object.keys(notes).sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
+  box.innerHTML = '<p style="font-size:12px; font-weight:600; color:var(--muted); margin:0 0 8px;">Qualitative notes from monthly validation meetings</p>' +
+    months.map(m => '<div class="theme-card" style="margin-bottom:8px; border-left-color: var(--orange);">' +
+      '<span class="tag">' + m + ' 2026</span>' +
+      '<p style="font-size:13px; color:var(--text); margin:4px 0 2px;">' + notes[m] + '</p>' +
+      '<p style="font-size:11px; color:var(--muted); margin:0;">Source: ' + QUALI_SOURCE_LABEL[m] + '</p>' +
+    '</div>').join('') +
+    '<p class="legend-note" style="margin-top:4px;">Validation reports are only available for March\u2013May 2026 so far; June and July notes will be added once those reports are published. Only facilities with a notable discordance are commented on in each report.</p>';
+}
+
 facilityTrendSelectEl.addEventListener('change', (e) => {
   currentTrendFacility = e.target.value;
   updateFacilityTrendChart();
   updateFacilityVolumeCharts();
+  renderFacilityQualiNotes();
 });
+renderFacilityQualiNotes();
 facilityIndicatorSelectEl.addEventListener('change', (e) => {
   currentFacilityPair = e.target.value;
   refreshFacilityIndicatorDefinition();
@@ -986,23 +1130,8 @@ facilityIndicatorSelectEl.addEventListener('change', (e) => {
   updateFacilityVolumeCharts();
 });
 refreshFacilityIndicatorDefinition();
-document.querySelectorAll('#facilityMetricToggle .month-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#facilityMetricToggle .month-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const metric = btn.dataset.metric;
-    if (metric === 'tpr') {
-      document.getElementById('facilityBoxTPR').style.display = '';
-      document.getElementById('facilityBoxVolumes').style.display = 'none';
-      document.getElementById('facilityTrendTitle').textContent = 'TPR by Facility, March to July 2026';
-    } else {
-      document.getElementById('facilityBoxTPR').style.display = 'none';
-      document.getElementById('facilityBoxVolumes').style.display = '';
-      document.getElementById('facilityTrendTitle').textContent = 'Volumes by Facility, March to July 2026';
-      initFacilityVolumeCharts();
-    }
-  });
-});
+// Volumes are always shown below TPR for the selected facility (no toggle)
+initFacilityVolumeCharts();
 
 // Facility table with month selector + TPR/Volume mode
 const months = Object.keys(FACILITY);
@@ -1079,7 +1208,19 @@ function renderTable() {
   });
   const cols = TABLE_COLUMNS[tableMode];
   const tbody = document.querySelector('#facilityTable tbody');
-  tbody.innerHTML = rows.map(r => '<tr>' + cols.map(c => {
+  let avgRowHTML = '';
+  if (tableMode === 'tpr') {
+    const idx = DISTRICT.labels.indexOf(currentMonth);
+    const avgRma = idx>=0 ? DISTRICT.rma[idx] : null;
+    const avgDhis2 = idx>=0 ? DISTRICT.dhis2_21[idx] : null;
+    avgRowHTML = '<tr style="background:#EEF2F7; font-weight:600;">' + cols.map(c => {
+      if (c.key === 'name') return '<td>District average</td>';
+      if (c.key === 'tpr_rma') return '<td>' + (avgRma!=null ? avgRma+'%' : 'NA') + '</td>';
+      if (c.key === 'tpr_dhis2') return '<td>' + (avgDhis2!=null ? avgDhis2+'%' : 'NA') + '</td>';
+      return '<td>NA</td>';
+    }).join('') + '</tr>';
+  }
+  tbody.innerHTML = avgRowHTML + rows.map(r => '<tr>' + cols.map(c => {
     if (c.spacer) return '<td style="border:none; background:transparent;"></td>';
     const v = r[c.key];
     const txt = c.fmt ? c.fmt(v) : (v!=null ? v : '-');
@@ -1094,7 +1235,7 @@ document.getElementById('facilityTableModeSelect').addEventListener('change', (e
   sortDir = -1;
   document.getElementById('facilityTableTitle').textContent = tableMode === 'tpr' ? 'TPR by Facility (%)' : 'Volume by Facility';
   document.getElementById('facilityTableNote').textContent = tableMode === 'tpr'
-    ? 'Click a column header to sort. Gap in percentage points (pp); shown in red if \u2265 10pp.'
+    ? 'Click a column header to sort. Gap in percentage points (pp); shown in red if \u2265 10pp. First row: district-level TPR average from RMA and DHIS2 (Ind.21/22) only \u2014 Manual and Lab Registers are not aggregated at district level, hence NA.'
     : 'Click a column header to sort. Raw counts of tests performed and positives, by source.';
   renderTableHeader();
   renderTable();
@@ -1327,25 +1468,10 @@ function chwBuildVolCharts() {
   });
 }
 
-document.querySelectorAll('#chwMetricToggle .month-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#chwMetricToggle .month-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const metric = btn.dataset.metric;
-    if (metric === 'tpr') {
-      document.getElementById('chwBoxTPR').style.display = '';
-      document.getElementById('chwBoxVolumes').style.display = 'none';
-      document.getElementById('chwDistrictChartTitle').textContent = 'CHW TPR by source, April to July 2026 (district)';
-      document.getElementById('chwDistrictNote').textContent = 'RMA-reported CHW TPR runs consistently above manual and reader counts, echoing the over-reporting concern that motivated this pilot.';
-    } else {
-      document.getElementById('chwBoxTPR').style.display = 'none';
-      document.getElementById('chwBoxVolumes').style.display = '';
-      document.getElementById('chwDistrictChartTitle').textContent = 'CHW test volumes by source, April to July 2026 (district)';
-      document.getElementById('chwDistrictNote').textContent = 'Volumes reflect only CHWs who reported that month, not all onboarded CHWs (see completeness below).';
-      chwBuildVolCharts();
-    }
-  });
-});
+// Volumes are always shown below TPR (no toggle)
+chwBuildVolCharts();
+document.getElementById('chwDistrictChartTitle').textContent = 'CHW TPR and volumes by source, April to July 2026 (district)';
+document.getElementById('chwDistrictNote').textContent = 'RMA-reported CHW TPR runs consistently above manual and reader counts, echoing the over-reporting concern that motivated this pilot. Volumes below reflect only CHWs who reported that month, not all onboarded CHWs (see completeness below).';
 
 // Completeness stat row
 (function chwRenderCompleteness() {
@@ -1354,6 +1480,7 @@ document.querySelectorAll('#chwMetricToggle .month-btn').forEach(btn => {
     return '<div class="stat"><div class="num">' + CHW_DISTRICT.reporting[i] + '/' + CHW_DISTRICT.onboarded[i] + '</div><div class="lbl">' + m + '</div></div>';
   }).join('');
 })();
+chwRenderCompletenessGrid();
 
 // CHW Detail table
 const chwMonths = Object.keys(CHW_DETAIL);
